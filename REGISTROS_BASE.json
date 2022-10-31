@@ -1,0 +1,101 @@
+[
+    {
+        "usuario": "Alex32",
+        "nombre": "Alejandro",
+        "apellidos": "Ramirez Vega",
+        "clave": "9spLQnWn5hZIuR2aS4tqOT2rdnbUXZWqrp815qxoNYk=",
+        "email": "gAAAAABjX_XAbEEyyvAHTgb6Tu37HioTXymBcK86kjOikvf3CA7dvY47PTFXyl4hOQVrOJu4iLS6Qv-O5oEXC9YV21ffHVBXw3xCINtxlyk7o9mLCcMPT_Y=",
+        "telefono": "gAAAAABjX_XA3NNiip57dn2k8YF-UQmyC9RsPJam1hJIFnTolDYaa_ZY-BEjnGX87euwqluToEtzNGq05P9xhKYJGY_P5hnUVg==",
+        "salt": "1fcee6197470d545",
+        "password": "d7d15457b255d2962471a465cc0d1dc339e78bab2e43e0bd4557a3f748a14d9e",
+        "dinero": "gAAAAABjX_XAV_zpv7hUc0kPA8_8xx8I204jBoSWUG_C7VP00XEgd_7_L8W7Fv54icc6giP2c7618LU1hO0p59xJriUjY4eVcw==",
+        "productos": [
+            {
+                "usuario": "Alex32",
+                "tipo": "Adobe Creative Cloud",
+                "precio": 34.67,
+                "licencia": "gAAAAABjX_YwnfhuJCGbkLVg3z4sLz55CtUM2T8o3TSsqnRRcJV1wSV5OKPZnCpEPnPCTXmKBmygza7tzdwPHi8RFCcye_LO3w=="
+            },
+            {
+                "usuario": "Alex32",
+                "tipo": "Norton 360",
+                "precio": 89.34,
+                "licencia": "gAAAAABjX_ZMs1lbqA5tL0rUpmoPtd6p6KRkpjFuoypoEn9QR8DAtwJWwyRmQT-e6jV6M9JkiqCv7HO6UkcbP7Urx5KfsJ3WUw=="
+            },
+            {
+                "usuario": "Alex32",
+                "tipo": "McAfee",
+                "precio": 82.322,
+                "licencia": "gAAAAABjX_Zg4U520fbfX980c5mJcoSGszYAgwgPsCdmy8GVG0eM3U4-0dlErzRG5sw3VVzpTjzSBmekGKqzGtLSafzwvIxFAQ=="
+            },
+            {
+                "usuario": "Alex32",
+                "tipo": "Windows 10",
+                "precio": 34.56,
+                "licencia": "gAAAAABjX_bLxk-n6vVy1_WG2Id8N9rwmIdb5GdlERCXNAGiEegOeWWdSHG2hKZVqmFYiKBYo0WOyIkQekKnCKQb8kiFd7229A=="
+            }
+        ]
+    },
+    {
+        "usuario": "marta_98",
+        "nombre": "Marta",
+        "apellidos": "Diaz Sanchez",
+        "clave": "lWqWOa95kS4DO47zAdfy9LKpNTfolToxcFE7Os586yQ=",
+        "email": "gAAAAABjX_XWRXOT0jYDuEa-Md2w4g5wqlV0ngnG90bnxDXPJmtSuhRBc9yK0-rsdwQXLZRiYsZpXVMiPeg4neE64QXoMVovVvHjkdZx84i5KcWGI4kyTCs=",
+        "telefono": "gAAAAABjX_XWMvcL7hE4CJoEOsoqCntwqGEHxHGTrnYCR20C5mcLAXmUFoNb6fh7ztbrf2MMdRvN5mPt5G6iStKXoWT6SmrQfQ==",
+        "salt": "dab8be2c1621b6f6",
+        "password": "d9762ca3fa819d1189173adea8babe8ff8147284b31fbf78e1c537168f921056",
+        "dinero": "gAAAAABjX_XW70MZX7WvtPdMKFVTfL9z3C-I38LbSTxQqdl3R8ilmDnRfLIYRQr1E5DU_grBAaYpg4a62EdYWuah93DkJ_mdjg==",
+        "productos": [
+            {
+                "usuario": "marta_98",
+                "tipo": "Windows 11",
+                "precio": 34.23,
+                "licencia": "gAAAAABjX_nwLyiLizQChQLBRgfblHYQMYj0fRdF4l6aauAgNK2ntxiFuOAwNV9YvXju_vtORD_mYp4Im8yE6grlyvzsyOgOPA=="
+            },
+            {
+                "usuario": "marta_98",
+                "tipo": "Microsoft 365",
+                "precio": 78.2,
+                "licencia": "gAAAAABjX_oLGnXgPzoFELnaAzM6AUm-8DOimJT2ZoiRx2qSVrHBV3nyW35QDN9WwiBJeo_u686XFXYxujbSR52CxkyYbO0o0g=="
+            },
+            {
+                "usuario": "marta_98",
+                "tipo": "Kaspersky 2022",
+                "precio": 98.2,
+                "licencia": "gAAAAABjX_pnCATkMiti5qOOVwyhtqQTN4aW0DNUCRUBUtd4XbOpWz-6IUfnPg0Mnf3i7MEzEr9AOwIeTQHOqhSZOMDS-NsMNw=="
+            }
+        ]
+    },
+    {
+        "usuario": "juAN_34",
+        "nombre": "Juan",
+        "apellidos": "Perez Navarro",
+        "clave": "U5L0jVljraha8l3-jIExckBOR1srEgY3Ouhat_AuqW0=",
+        "email": "gAAAAABjX_YBSkGhr6ih7ljHsr6g_MT-4hx-1sPIrxFqruslTZUDo7iUnMhkMCq7cTK21FSi3hI-HIQ-vc3RYPA5eARTecXwsmu2NqvKI4RB2oHraxZYJA0=",
+        "telefono": "gAAAAABjX_YBQ-XJZJUi0zdDCIzDVmMxXvK_yaGmqdwccVatmCHwOejhQ2zPn4hvQvHkcuV1_iQ8ZazE8gjoW_TPyJhTzB0bkQ==",
+        "salt": "b861579fa5cb2baa",
+        "password": "e713ab99eb21e775fa5905845c014dcdf68dcd6de4fd17ca639469c6b68c5fc9",
+        "dinero": "gAAAAABjX_YB9sVvj_3tjT_hI5VOSJVBsJldppdZzyAKIGDorIlFHXJKr-PU2qMcDqcprcAoYrAdgQ5pWWci-Esv97Li9h2pTg==",
+        "productos": [
+            {
+                "usuario": "juAN_34",
+                "tipo": "McAfee",
+                "precio": 23.56,
+                "licencia": "gAAAAABjX_qB7NMozS6QzhfMlDLARK7g4OBAMBiYzjKu-qxXLpx80dlD_9VDkb24o4CEaNoMj-OZyVW7pRVwV8JQaAJj_ozbOl9qzX4-X68wwrhr17mS9Ic="
+            },
+            {
+                "usuario": "juAN_34",
+                "tipo": "McAfee",
+                "precio": 18.23,
+                "licencia": "gAAAAABjX_qR0YOMciI_B8Mk27gu34BxTzogbYoheWJxdzFcHM2XeH3POMwiKNFgZdulYcN9i7ZcgV4Og7xlCcAI4RswmujZtg=="
+            },
+            {
+                "usuario": "juAN_34",
+                "tipo": "Windows 10",
+                "precio": 23.2,
+                "licencia": "gAAAAABjX_qfBCICu-cgDa8koxhHqsCx3DFVuFwqrGVr12AZoEt4ttu7ZrQBZ04U4NZLTvQ0iayx1p8Y7qG4AtyAJyJQf6kjzA=="
+            }
+        ]
+    }
+]
