@@ -1,0 +1,90 @@
+(*) Para que la aplicación funcione con esta base de datos preconfigurada, copiar el
+contenido del archivo registros_ejemplo.json en el archivo registros.json. De esta
+forma, la base de datos contará con los 4 usuarios descritos debajo los cuales
+tienen dinero ingresado a su cuenta y productos de distintos tipos y precios para
+poder ver el funcionamiento de la aplicación con varios usuarios registrados a la vez.
+
+FORMATO:
+
+(Usuario)
+(Nombre)
+(Apellidos)
+(Email)
+(Teléfono)
+(Contraseña)
+(Dinero)
+(Lista de productos)
+
+------------------------------------------------------
+
+Alex32
+Alejandro
+Ramirez Vega
+alejandro-ramirez@gmail.com
+628343932
+aleX*98d
+
+DINERO: 200€
+
+PRODUCTOS:
+1 - Windows 10 - 45.54€ - 12983b98bsb23
+1 - Windows 10 - 12.3€ - 2839b8f91b2fas
+2 - Windows 11 - 120.4€ - asdno123bvas
+5 - Norton 360 - 50€ - i123on89sbdiub
+6 - McAfee - 23.89€ - asd231i23uvvnvn
+
+------------------------------------------------------
+
+marta_98
+Marta
+Diaz Sanchez
+martita_98@outlook.com
+762899323
+As1*88sw
+
+DINERO: 200€
+
+PRODUCTOS:
+1 - Windows 10 - 65.54€ - 123b9c8b123b38
+2 - Windows 11 - 122.3€ - asjdn1iu2b31i2b3
+6 - McAfee - 20.42€ - aslkdi2n3nnnv
+6 - McAfee - 23.4€ - sajd23uuv9as9
+6 - McAfee - 28.82€ - 9823981b2v3x
+
+------------------------------------------------------
+
+juAN_34
+Juan
+Perez Navarro
+juan.34@yahoo.es
+623928374
+399_Dh45
+
+DINERO: 200€
+
+PRODUCTOS:
+3 - Microsoft 365 - 95.54€ - 9239b129b28ds
+3 - Microsoft 365 - 42.3€ - asjdi23i3i123
+5 - Norton 360 - 72.4€ - skkskskk123i
+6 - McAfee - 19.234€ - 120399v9vsd2
+7 - Kaspersky 2022 - 27.89€ - sd098128398hs
+
+------------------------------------------------------
+
+fran_99
+Fran
+Salas Lopez
+francisco_523@hotmail.com
+622934224
+sDj2_*3dG
+
+DINERO: 200€
+
+PRODUCTOS:
+1 - Windows 10 - 47.59€ - 12389vb98b2f
+4 - Adobe Creative Cloud - 42.349€ - 1298b1928b312
+4 - Adobe Creative Cloud - 44.234€ - sjnnvnwn123nn
+7 - Kaspersky 2022 - 242.3€ - 12390asd909213vas
+7 - Kaspersky 2022 - 230.89€ - qwqwenn123bbvs
+
+------------------------------------------------------

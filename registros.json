@@ -1,0 +1,206 @@
+[
+    {
+        "usuario": "Alex32",
+        "nombre": "Alejandro",
+        "apellidos": "Ramirez Vega",
+        "email": "yF\u0088W\u00b0A\u001e\u00c2go\u00d1\u00c17\u00e2\u00d6zL\u0090\u001c\u00e9\u00e7\u00d5\u00c0U\u00f7\u00cc\r",
+        "telefono": ".\u0018\u00d5\u000e\u00e5\u001cC\u0083:",
+        "salt": "b8b35a9afb6bfa41",
+        "password": "de5b06c23da4e2c0fff5e994eda4dcbc4ba18a8ea81f8615a83e6edb57710ac3",
+        "dinero": "*\u001a\u00dd\u0013\u00e1",
+        "productos": [
+            {
+                "usuario": "Alex32",
+                "tipo": "Windows 10",
+                "precio": 45.54,
+                "licencia": ")\u0018\u00d4\u0005\u00e2MC\u0088j1\u00c1\u0092i",
+                "tag_licencia": "U\u0091\u00c4A\t\u00a1\u0082=\u00c6\u00bc\u00cd\t\u00e7\u001e\u000f\u00f2"
+            },
+            {
+                "usuario": "Alex32",
+                "tipo": "Windows 10",
+                "precio": 12.3,
+                "licencia": "*\u0012\u00de\u0004\u00b3\u0017\u001c\u00899 \u0091\u00c6;\u00f8",
+                "tag_licencia": "\u009cz\u00eb\u0005(M\u008fsx\u00da\u00b6q\u000ei\u00ce2"
+            },
+            {
+                "usuario": "Alex32",
+                "tipo": "Windows 11",
+                "precio": 120.4,
+                "licencia": "yY\u0089S\u00be\u001eH\u0083j4\u00c2\u00d3",
+                "tag_licencia": "\u00964\u0090Q\u0080\u0007_\u00f1=\u00ba,!3\u0013\nj"
+            },
+            {
+                "usuario": "Alex32",
+                "tipo": "Norton 360",
+                "precio": 50.0,
+                "licencia": "q\u001b\u00df\u000e\u00beAB\u0089{ \u00c7\u00c9/\u00e9",
+                "tag_licencia": "\u0017\u0097\u00bd^\u0086/\u0096\u0013\u00e2\u0094t\u00bc\u00d2\u0017\u0013-"
+            },
+            {
+                "usuario": "Alex32",
+                "tipo": "McAfee",
+                "precio": 23.89,
+                "licencia": "yY\u0089\u000f\u00e2\u001e\u0013\u0082;7\u00d5\u00d64\u00fd\u00ca",
+                "tag_licencia": "\u00ecTH8\u001eC\u009e\u0018\u00fe{\u0096\u0097\u009cz\\\u00c8"
+            }
+        ],
+        "iv": "\u00da\u0082Pn\u008a\u00bd#\u008e\u00a9<T\u00ed\u0004:X\u00f9",
+        "tag_email": "eu\u0096\u0099\u0016\u00f2c\u0080\u00eddHQ\u0096\u0081\u00fbd",
+        "tag_telefono": "\u0005yD\u00f3\u0090J\u00c8f\u0003\u00c1\u00d4b\u0099\u00ae_\u00c3",
+        "tag_dinero": "&z\u00fc\u0017^KR\u0086DX&\u0089\u00c5\u00e6\u000b\u00b3"
+    },
+    {
+        "usuario": "marta_98",
+        "nombre": "Marta",
+        "apellidos": "Diaz Sanchez",
+        "email": "\"\u0003H\u00d53\u009a_\u00d7&2<\u00b7\u001dI\u00f0\f\u00ed\u00fe8\u00ee\u000ft",
+        "telefono": "xT\b\u0099c\u00d7\r\u00ba,",
+        "salt": "081e5ded2688d13c",
+        "password": "a30d3b2b1ddf349ba667061657d27710c336d4e4c3024c32da461be4a4fbc10d",
+        "dinero": "}R\n\u008fj",
+        "productos": [
+            {
+                "usuario": "marta_98",
+                "tipo": "Windows 10",
+                "precio": 65.54,
+                "licencia": "~P\t\u00c3c\u008d\u0006\u00ea.8O\u00ba[\u0005",
+                "tag_licencia": "a\u00ac\u00d2d\u00e9\u00df\u001eU\u00a5\u0095\u0087\u00f0>\u00b3\u00a4\u00a3"
+            },
+            {
+                "usuario": "marta_98",
+                "tipo": "Windows 11",
+                "precio": 122.3,
+                "licencia": ".\u0011P\u00c54\u00dfW\u00fd-hO\u00e9\u0001\u000f\u00feP",
+                "tag_licencia": "\t\u0014\u00f4\u0011\"#\u00ea\u00ed\u000e\u001d\b\u00a8eo\u00a1W"
+            },
+            {
+                "usuario": "marta_98",
+                "tipo": "McAfee",
+                "precio": 20.42,
+                "licencia": ".\u0011V\u00ca>\u0087\f\u00e6,d\u0012\u00b6\u001e",
+                "tag_licencia": "\u00fd\u00ce\u0091\u009eI~\u00c6\u00d7P<\u00c3CR\u0001\"\u00d5"
+            },
+            {
+                "usuario": "marta_98",
+                "tipo": "McAfee",
+                "precio": 23.4,
+                "licencia": "<\u0003P\u00c5h\u00ddK\u00fdi3\u001d\u00abQ",
+                "tag_licencia": "\u00b4\\\u001bxS\rn\u0081n\u0097\u0004\u00ad\u00891\u00b1="
+            },
+            {
+                "usuario": "marta_98",
+                "tipo": "McAfee",
+                "precio": 28.82,
+                "licencia": "vZ\b\u0092c\u00d6\u000f\u00ea-|O\u00a0",
+                "tag_licencia": "\nz_\u00a69\u008b\t\u00dc\u0087\u009d\u008b\u008a[\u00ec\u00cf\u00b1"
+            }
+        ],
+        "iv": "\u00ef\u0097l\u00ff\u00d7Qq\u009c\u00e4QA\u00e6\b\u00a0\u0085\u009b",
+        "tag_email": "\u009fE\u00c3D^\u00ec8\u00e3\u0002\u00a3)\u009bv\u008d\u0080\u00dd",
+        "tag_telefono": "\u00eb\u0014\u000b\u00c7n\u00ae\u00a30\u00fa\u0097\u009fL\u0000\u008e)C",
+        "tag_dinero": "D\u00bde\u001e\u00a0\u0003\u00e2\u00ccn\u009b\u00fb\u00e0\u00cd?\u0088b"
+    },
+    {
+        "usuario": "juAN_34",
+        "nombre": "Juan",
+        "apellidos": "Perez Navarro",
+        "email": "\u0099\u00cf\u00973\u00ef\u00aa-\u00e6\u0012\u00eax\u00beRW\u00f9\u0088",
+        "telefono": "\u00c5\u0088\u00c5d\u00f3\u00a1*\u0091_",
+        "salt": "8e9ff40c29e7df2a",
+        "password": "cd2e1ad2e66b9bd7c7b78758e24774bb2575e140f3375ca0c47d45f6edb39e1a",
+        "dinero": "\u00c1\u008a\u00c6s\u00f1",
+        "productos": [
+            {
+                "usuario": "juAN_34",
+                "tipo": "Microsoft 365",
+                "precio": 95.54,
+                "licencia": "\u00ca\u0088\u00c5d\u00a3\u00a8+\u009f\t\u00b9(\u00b5N",
+                "tag_licencia": "\u0003\u0099\u00fba\u00b0?#\u00f1\u0090\u0090\u00b9k7\u00e66\u0083"
+            },
+            {
+                "usuario": "juAN_34",
+                "tipo": "Microsoft 365",
+                "precio": 42.3,
+                "licencia": "\u0092\u00c9\u009c9\u00a8\u00ab*\u00cfX\u00e2!\u00e3\u000e",
+                "tag_licencia": "<\u00d8\u0006\u00a8\u0086\u00e0/\u00cdF\u00d1L\u007f\u00b8\u00c9\u0090j"
+            },
+            {
+                "usuario": "juAN_34",
+                "tipo": "Norton 360",
+                "precio": 72.4,
+                "licencia": "\u0080\u00d1\u009d.\u00aa\u00ear\u00cdZ\u00b9#\u00b8",
+                "tag_licencia": "\u008f\u00c8!\u00a0N|\u00ba\f\u0090\u008a\u00a7\u00eeV\"\u00bb\u00e0"
+            },
+            {
+                "usuario": "juAN_34",
+                "tipo": "McAfee",
+                "precio": 19.234,
+                "licencia": "\u00c2\u0088\u00c6n\u00f8\u00a0o\u009f\u001d\u00f8t\u00e3",
+                "tag_licencia": "\u007fZ\u00f8\u00b8\u00caJ\u00c8\u00bcV\u00f0\u008e\u00fd\u00ff\u009d\u008a_"
+            },
+            {
+                "usuario": "juAN_34",
+                "tipo": "Kaspersky 2022",
+                "precio": 27.89,
+                "licencia": "\u0080\u00de\u00c6d\u00f9\u00a8+\u009eX\u00b2(\u00b9N",
+                "tag_licencia": "\u00f7\u00cc\u00a3\u00a6!$\u00da\u00eb\u0089\rqZ\u00d92\u0010\u00cc"
+            }
+        ],
+        "iv": "\u0015\u00f7\u0015L\u00b5Q\u00a3\u00c7\u0093\u00a5\u001e\u0082\u0083R\f\u00de",
+        "tag_email": "\u0098\u00a7\u00ea\u00e9\u0093,:O\u009c\u0015\u0097\u00ef\u00f0;\u00ebr",
+        "tag_telefono": "\u009f\u0080\u00b1\u00fdS\u00bf\u008c\u00a3\u0085`\u00b9\u00d2\u00c2\u0093\u0093P",
+        "tag_dinero": "\u00d3\u001fD\u00efp8\u00b9n\u00e1c\u00c6%\u00fd\u00b9\u000f\u00b5"
+    },
+    {
+        "usuario": "fran_99",
+        "nombre": "Fran",
+        "apellidos": "Salas Lopez",
+        "email": "\u0013\u0013\u0000\u001et\"^u\u0088YK1' 8\u00b5\u0084\u00a8ka\u00ac\u00f6%\u009cF",
+        "telefono": "CSSI$\u007f\u001f$\u00d3",
+        "salt": "a716e4287594b9cc",
+        "password": "7efcdd44350067e34a78f1a5c6eed71f56290a5c1762e08f810d7e5a319d4674",
+        "dinero": "GQQ^'",
+        "productos": [
+            {
+                "usuario": "fran_99",
+                "tipo": "Windows 10",
+                "precio": 47.59,
+                "licencia": "DSRH.=O/\u00dfdLe",
+                "tag_licencia": "\"\u009d\u00bb=\u00b0\u00b7\u00d0n\u008e\u00d62\u0096\u00b2\u00d6\u0014\u0012"
+            },
+            {
+                "usuario": "fran_99",
+                "tipo": "Adobe Creative Cloud",
+                "precio": 42.349,
+                "licencia": "DSXHuz\u0014$\u00dfdM2&",
+                "tag_licencia": "\u0092\u0095\u008by\"nY\rM\u00cc\u00d63\u00f3\u00cd\u0083\u00fd"
+            },
+            {
+                "usuario": "fran_99",
+                "tipo": "Adobe Creative Cloud",
+                "precio": 44.234,
+                "licencia": "\u0006\u000b\u000f\u001ea%Zx\u00d64Mmz",
+                "tag_licencia": "\u00cd-z\u00e1ctf[\u0080\u00f3\u00a4\u0012zX\u009c\t"
+            },
+            {
+                "usuario": "fran_99",
+                "tipo": "Kaspersky 2022",
+                "precio": 242.3,
+                "licencia": "DSRI'*^r\u00de6G1%S&\u00bb\u0083",
+                "tag_licencia": "]-{\u001f\u00a1v\u00f5\u00c541\u00a2\u00f1q\u00d3\u001b\u0000"
+            },
+            {
+                "usuario": "fran_99",
+                "tipo": "Kaspersky 2022",
+                "precio": 230.89,
+                "licencia": "\u0004\u0016\u0010\u0007r%C'\u00d55\u001cab\u0013",
+                "tag_licencia": "\u00a3\u00cd^By\u00e7fYd\u00c5\u0012\u00a5\n\u007f\u0003\u0080"
+            }
+        ],
+        "iv": "\u00cb\u008b\u00a3#\u00acx\u008fY\b\u00b4\u00da\f\u00f2K_\u0012",
+        "tag_email": "\u0012\u00f1\u008dY\u008a\u00dd\u0016\u009fLLA\u00f5F]\u0082\u00a9",
+        "tag_telefono": "\u00c1\u00df<{Nlg\u0090r\u001d\u0003W\u0000W\u0097a",
+        "tag_dinero": "t\u00ebe\u00959/\u0080^\u00fa\u00a3&\u0005\u0081\u0094\u009d\u001c"
+    }
+]
