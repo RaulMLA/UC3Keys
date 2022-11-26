@@ -5,6 +5,8 @@ from scripts.mecanismos_criptograficos import *
 
 
 def cargarJSON(nombre_json: str) -> list:
+    """Función que carga los datos de un archivo JSON."""
+    
     try:
         with open(nombre_json, 'r') as archivo:
             datos_archivo = json.load(archivo)
@@ -14,17 +16,18 @@ def cargarJSON(nombre_json: str) -> list:
     return datos_archivo
 
 
-def guardarRegistro(usuario, nombre, apellidos, email, telefono, password) -> bool:
+def guardarRegistro(usuario, nombre, apellidos, email, telefono, password, clave_RSA) -> bool:
     """Función que guarda los datos de registro en el JSON."""
                         
     salt = generadorSALT()
     iv = generadorIV()
-    clave = generarClave(salt, crearFuncionResumenSHA256(salt + password))
+    clave = generarClave(salt, password)
     
     email_cifrado, tag_email = cifrarAES128(email, clave, iv)
     telefono_cifrado, tag_telefono = cifrarAES128(telefono, clave, iv)
-    dinero_cifrado, tag_dinero = cifrarAES128(str(0), clave, iv)
-                        
+    clave_cifrada, tag_clave = cifrarAES128(clave_RSA, clave, iv)
+    dinero_cifrado, tag_dinero = cifrarAES128("0.0", clave, iv)
+    
     datos = {
         'usuario': usuario,
         'nombre': nombre,
@@ -35,10 +38,12 @@ def guardarRegistro(usuario, nombre, apellidos, email, telefono, password) -> bo
         'password': crearFuncionResumenSHA256(salt + password),
         'dinero': dinero_cifrado,
         'productos': [],
+        'clave_RSA': clave_cifrada,
         'iv': iv,
         'tag_email': tag_email,
         'tag_telefono': tag_telefono,
-        'tag_dinero': tag_dinero
+        'tag_dinero': tag_dinero,
+        'tag_clave_RSA': tag_clave
     }
 
     registros = cargarJSON("registros.json")
@@ -47,6 +52,8 @@ def guardarRegistro(usuario, nombre, apellidos, email, telefono, password) -> bo
 
 
 def guardarDatos(datos: list, archivo: str) -> bool:
+    """Función que guarda los datos en un archivo JSON."""
+
     try:
         with open(archivo, 'w') as archivo_json:
             json.dump(datos, archivo_json, indent=4)
@@ -68,7 +75,8 @@ def buscarUsuario(usuario: str, archivo: str) -> bool:
     return False
 
 
-def guardarLicencia(usuario: str, tipo: str, precio: str, licencia: str, archivo: str) -> bool:
+def guardarLicencia(usuario: str, tipo: str, precio: str, licencia: str, archivo: str, password: str) -> bool:
+    """Función que guarda una licencia en el JSON de un usuario."""
 
     datos = cargarJSON(archivo)
 
@@ -77,14 +85,20 @@ def guardarLicencia(usuario: str, tipo: str, precio: str, licencia: str, archivo
             datos.remove(registro)
 
             iv = registro["iv"]
-            clave = generarClave(registro["salt"], registro["password"])
+            clave = generarClave(registro["salt"], password)
             licencia_cifrada, tag_licencia = cifrarAES128(licencia, clave, iv)
-            
+
+            clave_RSA = obtenerClaveRSA(usuario, password)
+            string_producto = stringProducto(usuario, tipo, precio, licencia_cifrada, tag_licencia)
+            hash_producto = aplicarHash(stringToBytes(string_producto))
+            firma_producto = firmarRSA(hash_producto, clave_RSA)
+
             lic = {'usuario': usuario,
                    'tipo': tipo,
                    'precio': float(precio),
                    'licencia': licencia_cifrada,
-                   'tag_licencia': tag_licencia
+                   'tag_licencia': tag_licencia,
+                   'firma_producto': firma_producto
                   }
             
             registro["productos"].append(lic)
@@ -95,7 +109,17 @@ def guardarLicencia(usuario: str, tipo: str, precio: str, licencia: str, archivo
     return False
 
 
+def stringProducto(usuario, tipo, precio, licencia_cifrada, tag_licencia):
+    """Función que devuelve un string con los datos de un producto concatenados."""
+
+    string_producto = usuario + tipo + str(precio) + licencia_cifrada + tag_licencia
+
+    return string_producto
+
+
 def obtenerProductos(usuario: str, archivo: str):
+    """Función que devuelve los productos de los demás usuarios."""
+
     productos = []
 
     datos = cargarJSON(archivo)
@@ -109,6 +133,8 @@ def obtenerProductos(usuario: str, archivo: str):
 
 
 def obtenerMisProductos(usuario: str, archivo: str):
+    """Función que devuelve los productos de un usuario."""
+
     productos = []
 
     datos = cargarJSON(archivo)
@@ -121,7 +147,9 @@ def obtenerMisProductos(usuario: str, archivo: str):
     return productos
 
 
-def comprarProducto(comprador:str, vendedor: str, tipo: str, precio: float, archivo: str) -> bool:
+def comprarProducto(comprador:str, vendedor: str, tipo: str, precio: float, archivo: str, password: str, password_vendedor: str) -> bool:
+    """Función que permite comprar un producto de otro usuario."""
+
     datos = cargarJSON(archivo)
     # Elimina el producto comprado y suma el dinero al vendedor.
     for registro in datos:
@@ -131,7 +159,7 @@ def comprarProducto(comprador:str, vendedor: str, tipo: str, precio: float, arch
                     datos.remove(registro)
                     registro["productos"].remove(producto)
 
-                    clave = generarClave(registro["salt"], registro["password"])
+                    clave = generarClave(registro["salt"], password_vendedor)
                     
                     dinero_registro = float(descifrarAES128(registro["dinero"], clave, registro["iv"], registro["tag_dinero"]))
                     dinero_registro += precio
@@ -147,7 +175,7 @@ def comprarProducto(comprador:str, vendedor: str, tipo: str, precio: float, arch
                         if registro["usuario"] == comprador:
                             datos.remove(registro)
 
-                            clave = generarClave(registro["salt"], registro["password"])
+                            clave = generarClave(registro["salt"], password)
                             
                             dinero_registro = float(descifrarAES128(registro["dinero"], clave, registro["iv"], registro["tag_dinero"]))
                             dinero_registro -= producto["precio"]
@@ -163,14 +191,16 @@ def comprarProducto(comprador:str, vendedor: str, tipo: str, precio: float, arch
     return False
 
 
-def ingresoDinero(usuario: str, dinero: float, archivo: str):
+def ingresoDinero(usuario: str, dinero: float, archivo: str, password: str):
+    """Función que ingresa dinero en la cuenta de un usario."""
+
     datos = cargarJSON(archivo)
 
     for registro in datos:
         if registro["usuario"] == usuario:
             datos.remove(registro)
 
-            clave = generarClave(registro["salt"], registro["password"])
+            clave = generarClave(registro["salt"], password)
             
             dinero_registro = float(descifrarAES128(registro["dinero"], clave, registro["iv"], registro["tag_dinero"]))
             dinero_registro += dinero
@@ -187,6 +217,8 @@ def ingresoDinero(usuario: str, dinero: float, archivo: str):
 
 
 def eliminarProducto(usuario: str, producto, archivo) -> bool:
+    """Función que elimina un producto de un usuario."""
+
     datos = cargarJSON(archivo)
 
     for registro in datos:
@@ -203,19 +235,26 @@ def eliminarProducto(usuario: str, producto, archivo) -> bool:
     return False
     
 
-def verDinero(usuario: str, archivo: str) -> float:
+def verDinero(usuario: str, archivo: str, password: str) -> float:
+    """Función para ver el dinero de un usuario."""
+
     datos = cargarJSON(archivo)
 
     for registro in datos:
         if registro["usuario"] == usuario:
-            clave = generarClave(registro["salt"], registro["password"])
+            clave = generarClave(registro["salt"], password)
 
             dinero = descifrarAES128(registro["dinero"], clave, registro["iv"], registro["tag_dinero"])
 
-    return float(dinero)
+            return float(dinero)
 
 
 def cambiarUsuario(usuario, nuevo_usuario, archivo) -> bool:
+    """
+    Función para cambiar el nombre usuario de un usuario.
+    (NO USADA EN LA SEGUNDA ENTREGA).
+    """
+
     datos = cargarJSON(archivo)
 
     for registro in datos:
@@ -234,6 +273,11 @@ def cambiarUsuario(usuario, nuevo_usuario, archivo) -> bool:
 
     
 def cambiarNombre(usuario, nuevo_nombre, archivo) -> bool:
+    """
+    Función para cambiar el nombre de un usuario.
+    (NO USADA EN LA SEGUNDA ENTREGA).
+    """
+
     datos = cargarJSON(archivo)
 
     for registro in datos:
@@ -249,6 +293,11 @@ def cambiarNombre(usuario, nuevo_nombre, archivo) -> bool:
 
     
 def cambiarApellidos(usuario, nuevo_apellido, archivo) -> bool:
+    """
+    Función para cambiar los apellidos de un usuario.
+    (NO USADA EN LA SEGUNDA ENTREGA).
+    """
+
     datos = cargarJSON(archivo)
 
     for registro in datos:
@@ -263,14 +312,16 @@ def cambiarApellidos(usuario, nuevo_apellido, archivo) -> bool:
     return False
 
     
-def cambiarEmail(usuario, nuevo_email, archivo) -> bool:
+def cambiarEmail(usuario, nuevo_email, archivo, password) -> bool:
+    """Función para cambiar el email de un usuario."""
+
     datos = cargarJSON(archivo)
 
     for registro in datos:
         if registro["usuario"] == usuario:
             datos.remove(registro)
 
-            clave = generarClave(registro["salt"], registro["password"])
+            clave = generarClave(registro["salt"], password)
             
             email_cifrado, tag_email = cifrarAES128(nuevo_email, clave, registro["iv"])
             
@@ -285,14 +336,16 @@ def cambiarEmail(usuario, nuevo_email, archivo) -> bool:
     return False
 
     
-def cambiarTelefono(usuario, nuevo_telefono, archivo) -> bool:
+def cambiarTelefono(usuario, nuevo_telefono, archivo, password) -> bool:
+    """Función para cambiar el teléfono de un usuario."""
+
     datos = cargarJSON(archivo)
 
     for registro in datos:
         if registro["usuario"] == usuario:
             datos.remove(registro)
 
-            clave = generarClave(registro["salt"], registro["password"])
+            clave = generarClave(registro["salt"], password)
             
             telefono_cifrado, tag_telefono = cifrarAES128(nuevo_telefono, clave, registro["iv"])
             
@@ -307,48 +360,38 @@ def cambiarTelefono(usuario, nuevo_telefono, archivo) -> bool:
     return False
 
 
-'''
-Esta función tendría que cambiar todos los tags, iv y cifrados del usuario cada vez
-que el usuario cambia la contraseña, por lo que para hacer el diseño de la aplicación
-más sencillo hemos decidido no permitir esta opción por el momento.
-def cambiarPass(usuario, nueva_pass, archivo) -> bool:
-    datos = cargarJSON(archivo)
+def obtenerClaveRSA(usuario, password):
+    """Función que descifra la clave privada de un usuario para firmar."""
+    
+    datos = cargarJSON("registros.json")
 
     for registro in datos:
         if registro["usuario"] == usuario:
-            datos.remove(registro)
-            salt = registro["salt"]
-            registro["password"] = crearFuncionResumenSHA256(salt + nueva_pass)
-            datos.append(registro)
+            clave_RSA_cifrada = registro["clave_RSA"]
+            clave_RSA = descifrarAES128(clave_RSA_cifrada, generarClave(registro["salt"], password), registro["iv"], registro["tag_clave_RSA"])
+            
+            return RSAKeyToObject(stringToBytes(clave_RSA))
 
-            # Cambiar iv, tags y cifrados del usuario.
+
+def obtenerClavePublicaRSA(usuario):
+    """Función que obtiene la clave pública de un usuario para verificar."""
     
-    if guardarDatos(datos, "registros.json"):
-        return True
+    nombre_archivo = './certificados_usuarios/' + usuario + '.crt'
+
+    certificado_usuario = x509.load_pem_x509_certificate(
+        open(nombre_archivo, 'rb').read(), default_backend())
+
+    return certificado_usuario.public_key()
+
+
+def cargarDatosClaveCA() -> dict:
+    """
+    Se devuelve la información de la clave privada de CA.
+    Dado que la función sólo contiene un diccionario, se devuelve
+    la posición 0 de la lista de datos del JSON.
+    """
     
-    return False
-'''
+    with open('ca/ca_key.json', 'r') as archivo:
+        datos = json.load(archivo)
 
-
-'''
-# Consideramos que el dinero de una cuenta bancaria es infinito para esta aplicación.
-# Esta función permitiría crear datos bancarios para el usuario en una nueva base de datos (datos_banco.json).
-def cargarDatosBanco(nombre, apellidos, num_tarjeta, pin):
-    
-    clave = generarClave()
-    salt = generadorSALT()
-    
-    datos = {
-        'nombre': usuario,
-        'apellidos': nombre,
-        'num_tarjeta': cifrarAES128(num_tarjeta, clave),
-        'pin': crearFuncionResumenSHA256(salt + pin)
-    }
-
-    registros = cargarJSON("datos_banco.json")
-    registros.append(datos)
-    if guardarDatos(registros, "datos_banco.json"):
-        return True
-
-    return False
-'''
+        return datos[0]

@@ -1,6 +1,7 @@
 EJECUCIÓN:
 
 - Ejecutar archivo main.py para comenzar la ejecución del programa.
+- Ingresar la contraseña maestra '1234' para descifrar la clave privada de la CA.
 - Seguir las instrucciones que se muestran en pantalla.
 
 
@@ -22,4 +23,8 @@ COSAS A CONSIDERAR
 
 PROPÓSITO DE LA APLICACIÓN:
 
-La aplicación consiste en una plataforma de compra y venta de claves para diferentes programas de software. Todos los procedimientos se realizan de forma segura mediante cifrado y descifrado de datos sensibles, tratamiento de contraseñas con funciones resumen y tiempos de espera entre acciones. En caso de ataque y robo de la información de la base de datos (registros.json en nuestro caso), el atacante no podrá acceder a datos sensibles ya que están cifrados de forma adecuada de modo que el atacante no posee la clave de cifrado y descifrado para acceder a los datos. Esto último sucede ya que la clave de cifrado y descifrado para cada usuario se realiza mediante derivación de clave usando la contraseña del usuario en cuestión en su forma hash.
+La aplicación consiste en una plataforma de compra y venta de claves para diferentes programas de software. Todos los procedimientos se realizan de forma segura mediante cifrado y
+descifrado de datos sensibles, tratamiento de contraseñas con funciones resumen y tiempos de espera entre acciones. En caso de ataque y robo de la información de la base de datos
+(registros.json en nuestro caso), el atacante no podrá acceder a datos sensibles ya que están cifrados de forma adecuada de modo que el atacante no posee la clave de cifrado y
+descifrado para acceder a los datos. Esto último sucede ya que la clave de cifrado y descifrado para cada usuario se realiza mediante derivación de clave usando la contraseña del
+usuario en cuestión en su forma hash.

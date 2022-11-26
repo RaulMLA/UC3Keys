@@ -3,6 +3,8 @@ contenido del archivo registros_ejemplo.json en el archivo registros.json. De es
 forma, la base de datos contará con los 4 usuarios descritos debajo los cuales
 tienen dinero ingresado a su cuenta y productos de distintos tipos y precios para
 poder ver el funcionamiento de la aplicación con varios usuarios registrados a la vez.
+Además, se debe copiar el contenido de ca_ejemplo a la carpeta ca y el contenido de
+certificados_usuarios_ejemplo a la carpeta certificados_usuarios.
 
 FORMATO:
 
@@ -12,7 +14,9 @@ FORMATO:
 (Email)
 (Teléfono)
 (Contraseña)
+
 (Dinero)
+
 (Lista de productos)
 
 ------------------------------------------------------

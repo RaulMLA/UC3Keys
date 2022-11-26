@@ -14,7 +14,11 @@ import time
 class Sesion:
     """Clase que representa una sesión de un usuario"""
     def __init__(self, usuario: str):
+        # Nombre del usuario almacenado en memoria durante la sesión del usuario.
         self.usuario = usuario
+        # Contraseña del usuario almacenada en memoria durante la sesión del usuario.
+        # Este dato es imprescindible para el cifrado/descifrado en la sesión.
+        self.password = ""
 
 
     def verProductos(self):
@@ -36,9 +40,17 @@ class Sesion:
             print("+-----+---------------+--------------------------+------------+")
             counter += 1
         print("\n[0] Volver al menú.")
-        
-        item = int(input("\nSelecciona el producto que quieres comprar: "))
 
+        while True:
+            try:
+                item = int(input("\nSelecciona el producto que quieres comprar: "))
+                break
+            except:
+                print("\n[ERROR]\nDebes introducir un número.\nVuelva a intentarlo en 3 segundos.")
+                time.sleep(3)
+                os.system ("clear")
+                self.verProductos()
+            
         if item == 0:
             print("\nVolviendo al menú...")
             time.sleep(1)
@@ -47,20 +59,77 @@ class Sesion:
 
         if item in range (1, len(productos) + 1):
             producto_seleccionado = productos[item - 1]
-            if verDinero(self.usuario, "registros.json") >= producto_seleccionado["precio"]:
-                if comprarProducto(self.usuario, producto_seleccionado["usuario"], producto_seleccionado["tipo"], producto_seleccionado["precio"], "registros.json"):
-                    usuario = buscarUsuario(producto_seleccionado["usuario"], "registros.json")
-                    clave = generarClave(usuario["salt"], usuario["password"])
-                    licencia = descifrarAES128(producto_seleccionado["licencia"], clave, usuario["iv"], producto_seleccionado["tag_licencia"])
-                    print("\nProducto {0} comprado por {1}€ correctamente.\nSu clave de licencia es: {2}" .format(producto_seleccionado["tipo"], producto_seleccionado["precio"], licencia))
-                    while True:
-                        exit = input("\nGuarde su licencia y escriba '0' para salir: ")
-                        if exit == "0":
-                            break
-                        print("\n[ERROR]\nNo ha pulsado la tecla correcta.\nVuelva a intentarlo.")
+            if verDinero(self.usuario, "registros.json", self.password) >= producto_seleccionado["precio"]:
+                
+                # SIMULACIÓN DE CONFIRMACIÓN DE LA COMPRA POR PARTE DE VENDEDOR.
+                # El comprador tiene que iniciar sesión para confirmar la compra.
+                print("\n[INFO]\nEl vendedor {0} tiene que iniciar sesión para confirmar la compra:" .format(producto_seleccionado["usuario"]))
+                
+                condition = False
+                intentos = 0
+
+                while not condition:
+                    print("\n-- INICIO DE SESIÓN (VENDEDOR {0}) --\n" .format(producto_seleccionado["usuario"]))
+                    vendedor = input("Usuario: ")
+                    password_vendedor = getpass.getpass("Contraseña: ")
+
+                    if buscarUsuario(vendedor, "registros.json"):
+                        datos_usuario = buscarUsuario(vendedor, "registros.json")
+                        hash = crearFuncionResumenSHA256(datos_usuario['salt'] + password_vendedor)
+                        if hash == datos_usuario["password"]:
+                            # Aquí podríamos cambiar el salt para que no sea igual siempre, pero lo mantenemos así por simplicidad.
+                            condition = True
+                        else:
+                            print("\n[ERROR]\nContraseña incorrecta.\n")
+                            time.sleep(1)
+                            intentos += 1
+                            if intentos > 3:
+                                print("Vuelva a intentarlo en 5 segundos.")
+                                time.sleep(5)
+                    else:
+                        print("\n[ERROR]\nUsuario no encontrado.\n")
                         time.sleep(1)
+                        intentos += 1
+                        if intentos > 3:
+                            print("Vuelva a intentarlo en 5 segundos.")
+                            time.sleep(5)
+
+                if vendedor == producto_seleccionado["usuario"]:
+
+                    # Verificación del producto para comprobar su integridad antes de ser comprado.
+                    string_producto = stringProducto(producto_seleccionado["usuario"], producto_seleccionado["tipo"], producto_seleccionado["precio"], producto_seleccionado["licencia"], producto_seleccionado["tag_licencia"])
+                    hash_producto = aplicarHash(stringToBytes(string_producto))
+                    clave_publica = obtenerClavePublicaRSA(vendedor)
+                    firma_string = producto_seleccionado["firma_producto"]
+
+                    try:
+                        verificarRSA(firma_string, hash_producto, clave_publica)
+                    except:
+                        print("\nEl producto no mantiene su integridad o no ha podido ser verificado.\nVolviendo al menú de productos...")
+                        time.sleep(3)
+                        os.system ("clear")
+                        self.verProductos()
+                    
+                    print("\nProducto verificado correctamente.")
+                    time.sleep(3)
+                    os.system ("clear")
+
+                    # Si se ha verificado el producto, se compra.
+                    if comprarProducto(self.usuario, vendedor, producto_seleccionado["tipo"], producto_seleccionado["precio"], "registros.json", self.password, password_vendedor):
+                        usuario = buscarUsuario(producto_seleccionado["usuario"], "registros.json")
+                        clave = generarClave(usuario["salt"], password_vendedor)
+                        licencia = descifrarAES128(producto_seleccionado["licencia"], clave, usuario["iv"], producto_seleccionado["tag_licencia"])
+                        print("\nProducto {0} comprado por {1}€ correctamente.\nSu clave de licencia es: {2}" .format(producto_seleccionado["tipo"], producto_seleccionado["precio"], licencia))
+                        while True:
+                            exit = input("\nGuarde su licencia y escriba '0' para salir: ")
+                            if exit == "0":
+                                break
+                            print("\n[ERROR]\nNo ha pulsado la tecla correcta.\nVuelva a intentarlo.")
+                            time.sleep(1)
+                    else:
+                        print("\n[ERROR]\nError durante la compra.\nVuelva a intentarlo en 3 segundos.")
                 else:
-                    print("\n[ERROR]\nError durante la compra.\nVuelva a intentarlo en 3 segundos.")
+                    print("\n[ERROR]\nEl usuario no coincide con el vendedor.\nVuelva a intentarlo en 3 segundos.")
             else:
                 print("\n[ERROR]\nNo tienes dinero suficiente.\nVuelva a intentarlo en 3 segundos.")
         else:
@@ -115,7 +184,7 @@ class Sesion:
                 precio = checkPrecio()
                 licencia = checkLicencia()
 
-                if guardarLicencia(self.usuario, tipo, precio, licencia, "registros.json"):
+                if guardarLicencia(self.usuario, tipo, precio, licencia, "registros.json", self.password):
                     print("\nLicencia de {0} subida por {1}€ satisfactoriamente.\nVolviendo al menú..." .format(tipo, precio))
                     time.sleep(3)
                     os.system ("clear")
@@ -161,14 +230,20 @@ class Sesion:
         print("\n[0] Volver al menú.")
 
         while True:
+
+            while True:
                 try:
-                    id = int(input("Selecciona el artículo que quieres eliminar: "))
-                    if id in range (0, len(productos) + 1):
-                        break
+                    id = int(input("\nSelecciona el artículo que quieres eliminar: "))
+                    break
                 except:
-                    print("\n[ERROR]\nArtículo incorrecto.\nVuelva a intentarlo en 3 segundos.")
+                    print("\n[ERROR]\nDebes introducir un número.\nVuelva a intentarlo en 3 segundos.")
                     time.sleep(3)
-                    os.system ("clear")
+            
+            if id in range (0, len(productos) + 1):
+                break
+            else:
+                print("\n[ERROR]\nArtículo incorrecto.\nVuelva a intentarlo en 3 segundos.")
+                time.sleep(3)
 
         if id == 0:
             print("\nVolviendo al menú...")
@@ -190,7 +265,7 @@ class Sesion:
 
         # Desciframos los datos cifrados.
 
-        clave = generarClave(informacion["salt"], informacion["password"])
+        clave = generarClave(informacion["salt"], self.password)
         
         email = descifrarAES128(informacion["email"], clave, informacion["iv"], informacion["tag_email"])
         telefono = descifrarAES128(informacion["telefono"], clave, informacion["iv"], informacion["tag_telefono"])
@@ -201,12 +276,8 @@ class Sesion:
         
         
         print("\nModificaciones disponibles:")
-        print("[1] Usuario")
-        print("[2] Nombre")
-        print("[3] Apellidos")
-        print("[4] Email")
-        print("[5] Teléfono")
-        #print("[6] Contraseña")
+        print("[1] Email")
+        print("[2] Teléfono")
         print("\n[0] Volver al menú.")
 
         seleccion = input("\nSelecciona el dato que quieres modificar: ")
@@ -217,29 +288,13 @@ class Sesion:
             os.system ("clear")
             return
         elif seleccion == "1":
-            nuevo_usuario = checkUsuario()
-            cambiarUsuario(self.usuario, nuevo_usuario, "registros.json")
-            self.usuario = nuevo_usuario
-            print("\nNombre cambiado a {0} correctamente." .format(nuevo_usuario))
-            time.sleep(2)
-        elif seleccion == "2":
-            nuevo_nombre = checkNombre()
-            cambiarNombre(self.usuario, nuevo_nombre, "registros.json")
-            print("\nNombre cambiado a {0} correctamente." .format(nuevo_nombre))
-            time.sleep(2)
-        elif seleccion == "3":
-            nuevo_apellido = checkApellidos()
-            cambiarApellidos(self.usuario, nuevo_apellido, "registros.json")
-            print("\nApellidos cambiados a {0} correctamente." .format(nuevo_apellido))
-            time.sleep(2)
-        elif seleccion == "4":
             nuevo_email = checkEmail()
-            cambiarEmail(self.usuario, nuevo_email, "registros.json")
+            cambiarEmail(self.usuario, nuevo_email, "registros.json", self.password)
             print("\nEmail cambiado a {0} correctamente." .format(nuevo_email))
             time.sleep(2)
-        elif seleccion == "5":
+        elif seleccion == "2":
             nuevo_telefono = checkTelefono()
-            cambiarTelefono(self.usuario, nuevo_telefono, "registros.json")
+            cambiarTelefono(self.usuario, nuevo_telefono, "registros.json", self.password)
             print("\nTeléfono cambiado a {0} correctamente." .format(nuevo_telefono))
             time.sleep(2)
         else:
@@ -248,27 +303,6 @@ class Sesion:
             os.system ("clear")
 
         self.informacionPerfil()
-        
-        '''
-        Dado que derivamos las claves de cifrado mediante la función resumen de la contraseña y
-        con el cambio de contraseña tendríamos que cambiar todos los valores cifrados para
-        adaptarlos a la nueva contraseña. Esto se haría mediante la función cambiarPass, pero en
-        nuestro caso hemos decidido no permitir esta operación de momento para simplificar el
-        funcionamiento de la aplicación.
-        elif seleccion == "6":
-            confirmar_pass = input("Contraseña actual: ")
-            datos_usuario = buscarUsuario(self.usuario, "registros.json")
-            hash = crearFuncionResumenSHA256(datos_usuario['salt'] + confirmar_pass)
-            if hash == datos_usuario["password"]:
-                nueva_pass = checkPassword()
-                cambiarPass(self.usuario, nueva_pass, "registros.json")
-                print("\nContraseña cambiada correctamente.")
-                time.sleep(2)
-            else:
-                print("\n[ERROR]\nContraseña no coincide con la actual.\nVuelva a intentarlo en 3 segundos.")
-                time.sleep(3)
-                os.system ("clear")
-        '''
 
             
     def ingresarDinero(self):
@@ -277,7 +311,7 @@ class Sesion:
         print("-- INGRESO DE DINERO --")
         dinero = checkDinero()
 
-        if ingresoDinero(self.usuario, dinero, "registros.json"):
+        if ingresoDinero(self.usuario, dinero, "registros.json", self.password):
             print("\nSe han ingresado correctamente {0}€ a la cuenta del usuario {1}." .format(dinero, self.usuario))
             time.sleep(2)
             os.system ("clear")
