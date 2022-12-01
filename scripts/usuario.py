@@ -185,7 +185,7 @@ class Sesion:
                 licencia = checkLicencia()
 
                 if guardarLicencia(self.usuario, tipo, precio, licencia, "registros.json", self.password):
-                    print("\nLicencia de {0} subida por {1}€ satisfactoriamente.\nVolviendo al menú..." .format(tipo, precio))
+                    print("\nLicencia de {0} firmada y subida por {1}€ satisfactoriamente.\nVolviendo al menú..." .format(tipo, precio))
                     time.sleep(3)
                     os.system ("clear")
                     return
